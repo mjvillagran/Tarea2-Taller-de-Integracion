@@ -40,6 +40,8 @@ def instagram
   }
 
   render json: params
+
 end
+
 
 end
