@@ -21,12 +21,25 @@ def instagram
 
   responseImg = HTTParty.get(urlImg)
   dataImg = responseImg["data"]
+
+  posts = Array.new
   dataImg.each do |item|
+    post = {
+          tags: item["tags"],
+          username: item["user"]["username"],
+          likes: item["likes"]["count"],
+          url: item["images"]["standard_resolution"]["url"],
+          caption: item["caption"]["text"]
+    }
+    posts.append(post)
   end
 
-  texto = "Posts con tag '" << tag.to_s << "': " << count.to_s
+  params = { metadata: {total: count},
+            posts: posts,
+            version: "1.0.0"
+  }
 
-  render json: texto
+  render json: params
 end
 
 end
